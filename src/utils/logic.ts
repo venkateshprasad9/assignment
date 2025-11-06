@@ -51,7 +51,12 @@ export function sortTasks(tasks: ReadonlyArray<DerivedTask>): DerivedTask[] {
 
 export function computeTotalRevenue(tasks: ReadonlyArray<Task>): number {
   return tasks
-    .filter((t) => t.status === "Done")
+    .filter(
+      (t) =>
+        t.status === "Done" && // Must be completed
+        Number.isFinite(t.revenue) && // Revenue must be a valid number
+        t.timeTaken >= 0 // Ignore tasks with invalid (e.g., negative) time
+    )
     .reduce((sum, t) => sum + t.revenue, 0);
 }
 

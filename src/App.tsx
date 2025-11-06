@@ -74,7 +74,7 @@ function AppContent() {
   }, [derivedSorted, q, fStatus, fPriority]);
 
   const handleAdd = useCallback(
-    (payload: Omit<Task, "id">) => {
+    (payload: Omit<Task, "id" | "createdAt" | "completedAt">) => {
       addTask(payload);
       setActivity((prev) =>
         [createActivity("add", `Added: ${payload.title}`), ...prev].slice(0, 50)
